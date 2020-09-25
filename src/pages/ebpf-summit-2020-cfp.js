@@ -111,6 +111,7 @@ const HeaderDesktop = () => (
   </div>
 );
 
+
 const Hero = () => (
   <div className="summit-hero" style={{
     background: `linear-gradient(89.77deg, #0E1C3E 0.87%, rgba(13, 16, 43, 0.68) 100.48%), center / cover no-repeat url(${require("../assets/summit-2020/hero-bg.jpg")}`,
