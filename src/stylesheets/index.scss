@@ -873,6 +873,10 @@ html.smooth-scroll {
         line-height: 30px;
         font-size: 16px;
         color: #333333;
+
+        a {
+          color: #4385F5;
+        }
       }
     }
   }
@@ -1104,6 +1108,7 @@ html.smooth-scroll {
         & > .section {
           display: grid;
           row-gap: 12px;
+          align-content: start;
           & > .title {
             margin: 0;
             line-height: 30px;
@@ -1118,7 +1123,7 @@ html.smooth-scroll {
           & > .list {
             display: grid;
             column-gap: 8px;
-            row-gap: 8px;
+            row-gap: 12px;
             grid-template-columns: auto 1fr;
             & > .row {
               display: contents;
@@ -1129,7 +1134,6 @@ html.smooth-scroll {
                 font-variant-numeric: proportional-nums;
                 color: #ffe100;
                 @media (min-width: 1024px) {
-                  line-height: 48px;
                   font-size: 18px;
                 }
               }
@@ -1140,7 +1144,6 @@ html.smooth-scroll {
                 font-weight: 500;
                 color: #bababa;
                 @media (min-width: 1024px) {
-                  line-height: 48px;
                   font-size: 18px;
                 }
                 & > .link {
@@ -1283,6 +1286,10 @@ html.smooth-scroll {
               font-weight: 700;
               color: #333333;
               background-color: #b2b2b2;
+              & .prompt {
+                font-size: 12px;
+                font-style: italic;
+              }
             }
           }
         }
@@ -1317,6 +1324,15 @@ html.smooth-scroll {
             & > .caption {
               @media (min-width: 1024px) {
                 display: none;
+              }
+            }
+            & > .link {
+              text-decoration: none;
+              color: #4385F5;
+              transition: .2s ease-in;
+              cursor: pointer;
+              &:hover {
+                opacity: .8;
               }
             }
           }

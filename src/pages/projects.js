@@ -12,7 +12,7 @@ const YouMaintain = () => (
     <li>
       If you are maintaining one of the listed projects and would like to adjust
       the content. Get in touch on{" "}
-      <a href="https://cilium.herokuapp.com/">Slack</a> or open a pull request
+      <a href="/slack">Slack</a> or open a pull request
       directly.
     </li>
   </ul>
@@ -32,7 +32,7 @@ const HowToList = () => (
     <li>
       The pull request will be reviewed by the community and merged by one of
       the maintainers. If you have any questions, feel free to ask on{" "}
-      <a href="https://cilium.herokuapp.com/">Slack</a>.
+      <a href="/slack">Slack</a>.
     </li>
   </ol>
 );
@@ -511,6 +511,32 @@ const ProjectDescriptions = () => (
         </div>
       </div>
     </div>
+
+    <div className="project-box">
+      <a name="tracee" />
+      <div className="project-major-title">Tracee</div>
+      <div className="project-minor-title">Dynamic Security Event Tracing</div>
+      <div className="project-body">
+        <a
+          className="project-logo"
+          target="_blank"
+          href="https://github.com/aquasecurity/tracee"
+        >
+          <img src={require("../assets/projects-logos/tracee.png")} />
+        </a>
+        <div className="project-description">
+          <p>
+            <a href="https://github.com/aquasecurity/tracee">
+              <b>GitHub</b>
+            </a>{" "}
+          </p>
+          <p>
+          Tracee uses eBPF technology to detect and filter operating system events, helping you expose security insights, detect suspicious behavior, and capture forensic indicators. 
+          </p>
+        </div>
+      </div>
+    </div>
+
   </div>
 );
 

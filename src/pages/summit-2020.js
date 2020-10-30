@@ -3,11 +3,13 @@ import cn from "classnames";
 import Helmet from "react-helmet";
 import { Link } from "gatsby";
 import Carousel from "nuka-carousel";
+import ModalVideo from "react-modal-video";
 import { useLocation } from '@reach/router';
 import queryString from 'query-string';
 import "../stylesheets/index.scss";
+import "../../node_modules/react-modal-video/scss/modal-video.scss";
 const pageMetaTitle = 'eBPF Summit 2020'
-const pageMetaDescription = 'Registration is now open for the inaugural eBPF Summit, a virtual event, targeted at DevOps, platform architects, and developers. To be held October 28-29, 2020.'
+const pageMetaDescription = 'Registration is now open for the inaugural eBPF Summit, a virtual event, targeted at DevOps, SecOps, platform architects, and developers. To be held October 28-29, 2020.'
 const speakers = [
   {
     card: {
@@ -18,7 +20,7 @@ const speakers = [
     },
 
     about: {
-      title: "Safe programs. The foundation of BPF",
+      title: "Safe Programs. The Foundation of BPF",
 
       description: [
         <>Everything runs in the cloud. The cloud is built on the linux kernel.</>,
@@ -35,6 +37,11 @@ const speakers = [
       id: "brendan-gregg",
       name: "Brendan Gregg",
       description: "Author of “BPF Performance Tools“, Lead Performance Engineer, Netflix"
+    },
+
+    about: {
+      title: "Performance Wins with BPF: Getting Started",
+      description: [<></>]
     }
   },
   {
@@ -46,7 +53,7 @@ const speakers = [
     },
 
     about: {
-      title: "BPF as a fundamentally better dataplane",
+      title: "BPF as a Fundamentally Better Dataplane",
 
       description: [
         <>BPF is seeing a rapid pace of development in the Linux kernel and tremendous adoption and growth in the user space landscape. Use cases often span the networking, tracing and security space, but their boundaries are blurred and do reach beyond these subsystems. This talk provides a deep dive on why BPF is a fundamental shift compared to more traditional kernel subsystems and why it is the best tool for the job in terms of performance, scalability, and operations in the age of containerization. We'll also dive into a few examples of recent kernel advancements from the BPF subsystem.</>,
@@ -55,18 +62,18 @@ const speakers = [
   },
   {
     card: {
-      avatarSrc: require("../assets/summit-2020/david-miller.jpg"),
-      id: "david-miller",
-      name: "David Miller",
-      description: "Linux Kernel Networking Maintainer, Red Hat"
-    }
-  },
-  {
-    card: {
       avatarSrc: require("../assets/summit-2020/kris-nova.jpg"),
       id: "kris-nova",
-      name: "Kris Nova",
+      name: "Kris Nóva",
       description: "Software Engineer & Open Source Advocate"
+    },
+
+    about: {
+      title: "Kernel tracing in production with Falco",
+
+       description: [
+        <>Join Kris Nóva as we look at how Falco uses eBPF for kernel tracing. The constraints of running Kubernetes in GKE left the Falco project without the ability to run a kernel module. See how we dynamically load a BPF probe at runtime bypass this constraint.</>,
+      ]
     }
   },
   {
@@ -94,7 +101,7 @@ const speakers = [
     },
 
     about: {
-      title: "Our eBPF journey at Datadog",
+      title: "Our eBPF Journey at Datadog",
 
       description: [
         <>As large-scale Kubernetes end-users, Datadog has grown through many technical challenges of running thousands of nodes and tens of thousands of pods. eBPF has been key to scaling our networking, and promises further improvements. Additionally, eBPF is providing the means to build new capabilities in our products. Laurent and Tabitha will share some of this history, thoughts on Datadog's current utilization of eBPF, and hopes for the future.</>,
@@ -110,7 +117,7 @@ const speakers = [
     },
 
     about: {
-      title: "A beginner’s guide to eBPF programming",
+      title: "A Beginner’s Guide to eBPF Programming",
 
       description: [
         <>You’ve heard about eBPF as an exciting technology that opens up a world of new observability, security and networking capabilities. But how do you write eBPF programs? In this talk Liz will show you how to get started so you can run your own custom code in the Linux kernel - or even if you don’t plan to write eBPF yourself, it will help you understand how the technology works.</>,
@@ -126,7 +133,7 @@ const speakers = [
     },
 
     about: {
-      title: "Our eBPF journey at Datadog",
+      title: "Our eBPF Journey at Datadog",
 
       description: [
         <>As large-scale Kubernetes end-users, Datadog has grown through many technical challenges of running thousands of nodes and tens of thousands of pods. eBPF has been key to scaling our networking, and promises further improvements. Additionally, eBPF is providing the means to build new capabilities in our products. Laurent and Tabitha will share some of this history, thoughts on Datadog's current utilization of eBPF, and hopes for the future.</>,
@@ -172,18 +179,22 @@ const agenda = [
 
     schedule: [
       {
-        time: "09:05 - 09:10",
-        title: "Welcome: 5 min",
+        time: <>09:00 - 09:15</>,
+        title: <>Welcome</>,
       },
 
       {
-        time: "09:10 - 09:30",
-        title: "Liz Rice (Intro workshop)",
+        time: "09:15 - 09:35",
+        title: <><i>A Beginner’s Guide to eBPF Programming</i><br/>Liz&nbsp;Rice</>,
+
+        description: <>
+          <p>You’ve heard about eBPF as an exciting technology that opens up a world of new observability, security and networking capabilities. But how do you write eBPF programs? In this talk Liz will show you how to get started so you can run your own custom code in the Linux kernel - or even if you don’t plan to write eBPF yourself, it will help you understand how the technology works.</p>
+        </>
       },
 
       {
-        time: "09:30 - 09:50",
-        title: "Daniel Borkmann",
+        time: "09:35 - 09:55",
+        title: <><i>BPF as a Fundamentally Better Dataplane</i><br/>Daniel&nbsp;Borkmann</>,
 
         description: <>
           <p>BPF is seeing a rapid pace of development in the Linux kernel and tremendous adoption and growth in the user space landscape. Use cases often span the networking, tracing and security space, but their boundaries are blurred and do reach beyond these subsystems. This talk provides a deep dive on why BPF is a fundamental shift compared to more traditional kernel subsystems and why it is the best tool for the job in terms of performance, scalability, and operations in the age of containerization. We'll also dive into a few examples of recent kernel advancements from the BPF subsystem.</p>
@@ -191,23 +202,22 @@ const agenda = [
       },
 
       {
-        time: "09:50 - 09:55",
-        title: "Break",
+        time: "09:55 - 10:00",
+        title: <>Break</>,
       },
 
       {
-        time: "09:55 - 10:20",
-        title: "Laurent Bernaille / Tabitha Sable",
+        time: "10:00 - 10:20",
+        title: <><i>Our eBPF Journey at Datadog</i><br/>Laurent&nbsp;Bernaille and Tabitha&nbsp;Sable</>,
 
         description: <>
-          <h5>Our eBPF journey at Datadog</h5>
           <p>As large-scale Kubernetes end-users, Datadog has grown through many technical challenges of running thousands of nodes and tens of thousands of pods. eBPF has been key to scaling our networking, and promises further improvements. Additionally, eBPF is providing the means to build new capabilities in our products. Laurent and Tabitha will share some of this history, thoughts on Datadog's current utilization of eBPF, and hopes for the future.</p>
         </>
       },
 
       {
         time: "10:20 - 10:40",
-        title: "KP Singh",
+        title: <><i>Security Auditing and Enforcement using eBPF</i><br/>KP&nbsp;Singh</>,
 
         description: <>
           <p>The BPF Linux Security Module unleashes the power of eBPF to the world of Linux Security by providing a unified interface for access control and auditing. The talk goes through the motivations behind developing a BPF based LSM, showcases some of the ways in which it is used at Google and provides some insights and updates on upcoming features that users can leverage.</p>
@@ -215,23 +225,18 @@ const agenda = [
       },
 
       {
-        time: "10:40 - 11:00",
-        title: "David Miller",
+        time: "10:40 - 10:45",
+        title: <>Break</>,
       },
 
       {
-        time: "11:00 - 11:05",
-        title: "Break",
-      },
-
-      {
-        time: "11:05 - 12:20",
+        time: "10:45 - 12:05",
         title: <>Lightning talks <Link className="link" to="#lightning-talks">see below</Link></>,
       },
 
       {
-        time: "12:20 - 12:30",
-        title: "Closing comments",
+        time: "12:05 - 12:15",
+        title: <>Closing comments</>,
       },
     ]
   },
@@ -241,16 +246,15 @@ const agenda = [
 
     schedule: [
       {
-        time: "09:05 - 09:10",
-        title: "Welcome: 5 min",
+        time: <>09:00 - 09:10</>,
+        title: <>Welcome</>,
       },
 
       {
         time: "09:10 - 09:30",
-        title: "Alexei Starovoitov",
+        title: <><i>Safe Programs. The Foundation of BPF</i><br/>Alexei&nbsp;Starovoitov</>,
 
         description: <>
-          <h5>Safe programs. The foundation of BPF</h5>
           <p>Everything runs in the cloud. The cloud is built on the linux kernel.</p>
           <p>Extending the linux kernel is not an easy task: One mistake and the monolithic kernel will crash taking down the cloud. When bugs are finally fixed the reboot of the large cloud will take a long time.</p>
           <p>BPF is the kernel programming model that lets developers extend the kernel safely and add features to the live system without reboot.</p>
@@ -261,32 +265,40 @@ const agenda = [
 
       {
         time: "09:30 - 09:50",
-        title: "Kris Nova",
+        title: <><i>Kernel tracing in production with Falco</i><br/>Kris&nbsp;Nova</>,
       },
 
       {
         time: "09:50 - 09:55",
-        title: "Break",
+        title: <>Break</>,
       },
 
       {
         time: "09:55 - 10:15",
-        title: "Brendan Gregg",
+        title: <><i>Performance Wins with BPF: Getting Started</i><br/>Brendan&nbsp;Gregg</>,
       },
 
       {
         time: "10:15 - 10:35",
-        title: "Zang Li",
+        title: <><i>Kubernetes Network Policy Logging with eBPF</i><br/>Zang&nbsp;Li</>,
+
+        description: <>
+          <p>In Kubernetes, micro-segmentation is achieved through network policy which specifies how pods are allowed to communicate with one another. Policy visibility is a key requirement for many Kubernetes customers who use network policy to secure their cluster. In this talk, Zang will show how Google built Kubernetes network policy logging with eBPF and how the policy visibility is achieved efficiently.</p>
+        </>
       },
 
       {
         time: "10:35 - 10:55",
-        title: "Thomas Graf",
+        title: <><i>The Future of eBPF-based Networking and Security</i><br/>Thomas&nbsp;Graf</>,
+
+        description: <>
+          <p>The future of Networking and Security is based on eBPF. How will this new world look like? There is a massive potential of evolution in the infrastructure space ahead of us as we tap further into the powers of eBPF. We'll explore what is already possible today and what is yet to come as eBPF-based projects continue to evolve and provide benefits to the ecosystem.</p>
+        </>
       },
 
       {
         time: "10:55 - 11:00",
-        title: "Break",
+        title: <>Break</>,
       },
 
       {
@@ -296,7 +308,7 @@ const agenda = [
 
       {
         time: "12:15 - 12:30",
-        title: "Closing comments",
+        title: <>Closing comments</>,
       },
     ]
   }
@@ -306,77 +318,85 @@ const lightningTalks = [
   {
     title: "Using BCC and bpftrace with Performance Co-Pilot",
     name: "Andreas Gerstmayr",
-    organization: "Red Hat"
+    organization: "Red Hat",
+    videoId: "hm5ygaJh5iw",
   },
 
   {
-    title: "Containers and BPF: twagent story",
+    title: "Containers and BPF: twagent Story",
     name: "Andrey Ignatov",
     organization: "Facebook"
   },
 
   {
-    title: "Zero instrumentation monitoring with your first steps in eBPF",
+    title: "Zero Instrumentation Monitoring with Your First Steps in eBPF",
     name: "Beatriz Martínez",
-    organization: "Isovalent"
+    organization: "Isovalent",
+    videoId: "nDWmTU5iOpE",
   },
 
   {
-    title: 'Building a Secure and Maintainable PaaS',
-    name: 'Bradley Whitfield',
-    organization: 'Capital One',
+    title: "Building a Secure and Maintainable PaaS",
+    name: "Bradley Whitfield",
+    organization: "Capital One",
+    videoId: "k12N5lq1Gas",
   },
 
   {
     title: "eBPF at Adobe",
     name: "Brandon Cook",
-    organization: "Adobe"
+    organization: "Adobe",
+    videoId: "ike2IDC9xtw",
   },
 
   {
     title: "How and When You Should Measure CPU Overhead of eBPF Programs",
     name: "Bryce Kahle",
-    organization: "Datadog"
+    organization: "Datadog",
+    videoId: "W5gG-Svh_bg",
   },
 
   {
     title: "Building a Behavioral Knowledge Graph using eBPF",
-    name: "Dinesh Venkatesan",
+    name: "Dinesh Venkatesan + Aditi Bhatnagar",
     organization: "Microsoft"
   },
 
   {
-    title: "Can eBPF save us from the data deluge? A case for file filtering in eBPF",
+    title: "Can eBPF Save Us from the Data Deluge? A Case for File Filtering in eBPF",
     name: "Giulia Frascaria",
-    organization: "Vrije Universiteit Amsterdam"
+    organization: "Vrije Universiteit Amsterdam",
+    videoId: "OwxCwSyP2N4",
   },
 
   {
-    title: "Tracing and detecting malware using eBPF",
+    title: "Tracing and Detecting Malware using eBPF",
     name: "Itay Shakury",
     organization: "Aqua Security"
   },
 
   {
-    title: "Steering connections to sockets with BPF socket lookup hook",
+    title: "Steering Connections to Sockets with BPF Socket Lookup Hook",
     name: "Jakub Sitnicki",
-    organization: "Cloudflare"
+    organization: "Cloudflare",
+    videoId: "Hw1yRAmNz28",
   },
 
   {
-    title: "Building rbperf, a Ruby BPF profiler",
+    title: "Building rbperf, a Ruby BPF Profiler",
     name: "Javier Honduvilla Coto",
     organization: "Facebook"
   },
 
   {
-    title: "Enabling eBPF super powers on ARM64 with Cilium",
+    title: "Enabling eBPF Super Powers on ARM64 with Cilium",
     name: "Jianlin Lv",
-    organization: "Arm"
+    organization: "Arm",
+    videoId: "hdUywxvsYKI",
   },
 
   {
-    title: "How to ship BPF with your Go project",
+    title: "How to Ship BPF with Your Go project",
     name: "Lorenz Bauer",
     organization: "Cloudflare"
   },
@@ -384,7 +404,8 @@ const lightningTalks = [
   {
     title: "Debugging the eBPF Virtual Machine",
     name: "Lorenzo Fontana",
-    organization: "Sysdig"
+    organization: "Sysdig",
+    videoId: "m03dIt2i7CQ",
   },
 
   {
@@ -394,50 +415,83 @@ const lightningTalks = [
   },
 
   {
+    title: "Global Gaming Infrastructure with Cilium",
+    name: "Luan Guimarães",
+    organization: "Wildlife Studios"
+  },
+
+  {
     title: "Implementation of Hardware Breakpoint in BCC",
     name: "Manali Shukla",
-    organization: "Cisco Systems India"
+    organization: "Cisco",
+    videoId: "C3rfcZMiWvo",
+  },
+
+  {
+    title: "North-South Load Balancing of Kubernetes Services with eBPF/XDP",
+    name: "Martynas Pumputis",
+    organization: "Isovalent",
+    videoId: "GNePX4Sw6uA",
   },
 
   {
     title: "Identity Aware Threat Detection and Network Monitoring by using eBPF",
     name: "Natalia Reka Ivanko",
-    organization: "Isovalent"
+    organization: "Isovalent",
+    videoId: "wkFQ1H0GI88",
   },
 
   {
-    title: "Scaling a multi-tenant k8s cluster in a Telco",
+    title: "Scaling a Multi-Tenant k8s Cluster in a Telco",
     name: "Pablo Moncada",
-    organization: "MasMovil"
+    organization: "MasMovil",
+    videoId: "o6kNhmuOeMY",
   },
 
   {
-    title: "The tale of Smokey and the Crypto Bandits",
+    title: "The Tale of Smokey and the Crypto Bandits",
     name: "Ramiro Berrelleza",
-    organization: "Okteto"
+    organization: "Okteto",
+    videoId: "KP0yWWzMN70",
   },
 
   {
     title: "Securing Kubernetes Clusters with DevSecOps and GitLab",
     name: "Sam White",
-    organization: "GitLab"
+    organization: "GitLab",
+    videoId: "adelo4XyNf0",
   },
   {
     title: "From Managed Kubernetes to App Platform: 1.5 Years of Cilium Usage at DigitalOcean",
-    name: "Timo Reinmann",
+    name: "Timo Reimann",
     organization: "DigitalOcean",
+  },
+
+  {
+    title: "Past, Present, and Future of Cilium and Hubble at Palantir",
+    name: "Vlad Ungureanu",
+    organization: "Palantir"
   },
 
   {
     title: "bpfbox: Simple Precise Process Confinement with KRSI and eBPF",
     name: "William Findlay",
-    organization: "Carleton University"
+    organization: "Carleton University",
+    videoId: "GZ7qutLXDY4",
   },
 
   {
-    title: "eBPF in LINE",
+    title: "eBPF at LINE's Private Cloud",
     name: "Yutaro Hayakawa",
-    organization: "LINE Corporation"
+    organization: "LINE Corporation",
+    videoId: "yiQ9muH8IGg",
+  },
+
+  {
+    title: "Debugging Go in Prod using eBPF",
+    name: "Zain Asgar",
+    organization: "Pixie",
+    videoId: "IGLs_Om6DG8",
   },
 ]
 
@@ -475,7 +529,7 @@ const slides = [
       <p>In this session we will cover the design an implementation of a Ruby profiler & tracer that runs in the BPF runtime. We will go through what advantages – such as being low-overhead and requiring no code modification – and tradeoffs a BPF profiler offers…</p>
     </>,
 
-    popupTitle: 'Building rbperf, a Ruby BPF profiler',
+    popupTitle: 'Building rbperf, a Ruby BPF Profiler',
 
     popupDescription: <>
       <p>In this session we will cover the design an implementation of a Ruby profiler & tracer that runs in the BPF runtime. We will go through what advantages – such as being low-overhead and requiring no code modification – and tradeoffs a BPF profiler offers.</p>
@@ -490,7 +544,7 @@ const slides = [
       <p>You've written some incredibly sophisticated BPF, and it works on your laptop. Now what? I'll show you how to use bpf2go to embed your BPF in a Go binary for maximum ease of use.</p>
     </>,
 
-    popupTitle: 'How to ship BPF with your Go project',
+    popupTitle: 'How to Ship BPF with Your Go Project',
   },
   {
     name: 'Jianlin Lv',
@@ -500,7 +554,7 @@ const slides = [
       <p>Cilium has been widely used in modern Cloud Native developing. This talk will introduce the status of Cilium on the Arm64 platform and its future work; we're excited to start the journey of Cilium Arm64 support in Cilium v1.8: fixed compilation and runtime...</p>
     </>,
 
-    popupTitle: 'Enabling eBPF super powers on ARM64 with Cilium',
+    popupTitle: 'Enabling eBPF Super Powers on ARM64 with Cilium',
 
     popupDescription: <>
       <p>Cilium has been widely used in modern Cloud Native developing. This talk will introduce the status of Cilium on the Arm64 platform and its future work; we're excited to start the journey of Cilium Arm64 support in Cilium v1.8: fixed compilation and runtime issues and added new jobs in Travis CI to run on the Arm64 platform. the Cilium team has initiated work to build images that support multi-CPU architecture; they will be available soon as regular image snapshots.</p>
@@ -544,7 +598,7 @@ const slides = [
       <p>eBPF was born for networking, and it shows! The ability to access, modify and drop in-flight packets is just one of the many eBPF superpowers. But how are packet operations different from file I/O, and why is it relevant to answer this question now?...</p>
     </>,
 
-    popupTitle: 'Can eBPF save us from the data deluge? A case for file filtering in eBPF',
+    popupTitle: 'Can eBPF Save Us from the Data Deluge? A Case for File Filtering in eBPF',
 
     popupDescription: <>
       <p>eBPF was born for networking, and it shows! The ability to access, modify and drop in-flight packets is just one of the many eBPF superpowers. But how are packet operations different from file I/O, and why is it relevant to answer this question now?</p>
@@ -574,7 +628,7 @@ const slides = [
       <p>A cloud native stack is orchestrated by Kubernetes using Google’s GKE managed service with...</p>
     </>,
 
-    popupTitle: 'Scaling a multi-tenant k8s cluster in a Telco',
+    popupTitle: 'Scaling a Multi-Tenant k8s Cluster in a Telco',
 
     popupDescription: <>
       <p>MasMovil is the fourth telecom provider in Spain with 10M customers and also provides communication to more than 700 local telco providers as a wholesale service.</p>
@@ -602,7 +656,7 @@ const slides = [
       <p>The user-provided BPF socket lookup program looks at the pac...</p>
     </>,
 
-    popupTitle: 'Steering connections to sockets with BPF socket lookup hook',
+    popupTitle: 'Steering Connections to Sockets with BPF Socket Lookup Hook',
 
     popupDescription: <>
       <p>In Linux v5.9 we have introduced a new type of BPF hook for attaching BPF programs to L4 socket lookup, specifically to listening socket lookup for TCP, and to unconnected socket lookup for UDP.</p>
@@ -624,12 +678,26 @@ const slides = [
       <p>After years working with cloud environments, having seen born microservices architectures, DevOps paradigm, and recent observability with the era of applications instrumentation, you know eBPF is the next big thing and you’ve heard it all: performance opti...</p>
     </>,
 
-    popupTitle: 'Zero instrumentation monitoring with your first steps in eBPF',
+    popupTitle: 'Zero Instrumentation Monitoring with Your First Steps in eBPF',
 
     popupDescription: <>
       <p>After years working with cloud environments, having seen born microservices architectures, DevOps paradigm, and recent observability with the era of applications instrumentation, you know eBPF is the next big thing and you’ve heard it all: performance optimizations, security, and networking benefits you want to bring to your environments. You are already looking into what tools out there you could bring to your platform teams, but don’t quite yet understand how this really works and you are one of those that really like to understand how the technology you are using works under the hood.</p>
       <p>If that sounds familiar to you, this lightning session will guide you through with a hands-on example covering a use case to monitor applications without editing or instrumenting them. Interact with the demo and get your country on the map!</p>
       <p>Want to know more and what this is about? don’t miss it!</p>
+    </>
+  },
+  {
+    name: 'Vlad Ungureanu',
+    title: 'Palantir',
+
+    description: <>
+      <p>In this talk, Vlad will present the reasons Palantir choose Cilium as their CNI plugin for their ephemeral Kubernetes infrastructure, how their InfoSec team uses Hubble for monitoring workloads, and their future plans for injecting authentication material...</p>
+    </>,
+
+    popupTitle: 'Past, Present, and Future of Cilium and Hubble at Palantir',
+
+    popupDescription: <>
+      <p>In this talk, Vlad will present the reasons Palantir choose Cilium as their CNI plugin for their ephemeral Kubernetes infrastructure, how their InfoSec team uses Hubble for monitoring workloads, and their future plans for injecting authentication material at the network layer for workloads using Cilium.</p>
     </>
   },
   {
@@ -654,7 +722,7 @@ const slides = [
       <p>In this talk we present how we use eBPF to trace container images in a sandbox, in order to detect malicious behavior that might appear later at runtime. We will present an open source tool that we have built for that task, and how we analyze the system le...</p>
     </>,
 
-    popupTitle: 'Tracing and detecting malware using eBPF',
+    popupTitle: 'Tracing and Detecting Malware using eBPF',
 
     popupDescription: <>
       <p>In this talk we present how we use eBPF to trace container images in a sandbox, in order to detect malicious behavior that might appear later at runtime. We will present an open source tool that we have built for that task, and how we analyze the system level activity to produce applicative security insights.</p>
@@ -668,7 +736,7 @@ const slides = [
       <p>Okteto Cloud is a developer platform, powered by Kubernetes. The biggest benefit that our users get from our platform is the ability to easily deploy any type of workload with one click. A group of Crypto Bandits discovered us, and decided to set up camp o...</p>
     </>,
 
-    popupTitle: 'The tale of Smokey and the Crypto Bandits',
+    popupTitle: 'The Tale of Smokey and the Crypto Bandits',
 
     popupDescription: <>
       <p>Okteto Cloud is a developer platform, powered by Kubernetes. The biggest benefit that our users get from our platform is the ability to easily deploy any type of workload with one click. A group of Crypto Bandits discovered us, and decided to set up camp on our platform and use it to mine crypto coins. What's worse, they used our ""source to deploy"" feature to push their instructions to a Github repo, for more people to join their merry gang. A gold rush started…</p>
@@ -698,7 +766,7 @@ const slides = [
       <p>BPF, and more specifically cgroup-bpf, has been in heavy use by twagent for 2.5 years providing solutions for use-cases such as container IP assignment, topology-aware...</p>
     </>,
 
-    popupTitle: 'Containers and BPF: twagent story',
+    popupTitle: 'Containers and BPF: twagent Story',
 
     popupDescription: <>
       <p>twagent is a daemon that runs on every Facebook server and manages Facebook containers.</p>
@@ -708,7 +776,7 @@ const slides = [
   },
   {
     name: 'Manali Shukla',
-    title: 'Cisco Systems India',
+    title: 'Cisco',
 
     description: <>
       <p>Hardware breakpoint is an interesting feature, known as memory breakpoint provides an elegant mechanism to monitor memory access or instruction executions.  Such monitoring is vital in debugging the system for data corruption. It can be used to understand...</p>
@@ -722,25 +790,39 @@ const slides = [
     </>
   },
   {
+    name: 'Martynas Pumputis',
+    title: 'Isovalent',
+
+    description: <>
+      <p>Kubernetes service load balancing has relied far too long on netfilter and iptables - two technologies which carry legacy accumulated over 20 years of development grounded in a more traditional networking environment that is typically far smaller...</p>
+    </>,
+
+    popupTitle: 'North-South Load Balancing of Kubernetes Services with eBPF/XDP',
+
+    popupDescription: <>
+      <p>Kubernetes service load balancing has relied far too long on netfilter and iptables - two technologies which carry legacy accumulated over 20 years of development grounded in a more traditional networking environment that is typically far smaller and more static than your average Kubernetes cluster. In this talk, the audience will learn how Cilium leverages eBPF/XDP to replace both to implement load balancing of Kubernetes services. The implementation not only improves scalability of service load balancing, but also brings new features, such as DSR or consistent hashing.</p>
+    </>
+  },
+  {
     name: 'Yutaro Hayakawa',
     title: 'LINE Corporation',
 
     description: <>
       <p>LINE is one of the most famous messaging services in Asian countries like Japan, Taiwan, Thailand, and Indonesia, accommodating 185 million global MAU and 3Tbps+ network traffic in total.</p>
-      <p>In this talk, we'll introduce two topics regarding eBPF in LINE's O...</p>
+      <p>In this talk, we'll introduce two topics regarding eBPF at LINE's OpenStack-based private cloud infrastructure...</p>
     </>,
 
-    popupTitle: 'eBPF in LINE',
+    popupTitle: 'eBPF at LINE\'s Private Cloud',
 
     popupDescription: <>
       <p>LINE is one of the most famous messaging services in Asian countries like Japan, Taiwan, Thailand, and Indonesia, accommodating 185 million global MAU and 3Tbps+ network traffic in total.</p>
-      <p>In this talk, we'll introduce two topics regarding eBPF in LINE's OpenStack-based private cloud infrastructure.</p>
+      <p>In this talk, we'll introduce two topics regarding eBPF at LINE's OpenStack-based private cloud infrastructure.</p>
       <p>The first use case is the XDP-based L4 load balancer we have developed since 2016. It is already becoming one of the fundamental features of our service. We'll introduce our scale, deployment, and integration with other cloud components.</p>
       <p>As a second use case, we'll introduce a brand new tracing tool called ipftrace (https://github.com/YutaroHayakawa/ipftrace2) we develop to investigate the complicated Linux kernel network datapath bahevior. We have applied this tool to investigate the strange performance degradation of our SRv6 + VRF based hypervisor network and found the bug in TSO/GSO handling. Through this effort, we've got significant performance gain.</p>
     </>
   },
   {
-    name: 'Dinesh Venkatesan',
+    name: 'Dinesh Venkatesan + Aditi Bhatnagar',
     title: 'Microsoft',
 
     description: <>
@@ -751,7 +833,7 @@ const slides = [
 
     popupDescription: <>
       <p>In this talk, we will use BPF to trap the data produced by the system events generated by execution of binaries and process them to build information and represent the information contextually to build a Knowledge graph. Knowledge Graph brings the ability to create applied context aware solutions to create heuristics. In this talk, we will demonstrate a Proof-Of-Concept that maps the execution of an executable or set of executables (such as adversary simulation) into a Knowledge Graph. This graph can then be used as a central artefact to produce explainable intelligence about the adversary simulation activities and automatically guide a heuristic decision-making process.</p>
-      <p>We will also talk about how the same approach can be utilized in.</p>
+      <p>We will also talk about how the same approach can be utilized in</p>
 
       <ol>
         <li>Similarity analysis</li>
@@ -819,7 +901,7 @@ const Hero = () => (
       </div>
 
       <p className="description">
-        Registration is now open for the inaugural eBPF Summit, a virtual event, targeted at DevOps, platform architects, and developers.
+        Registration is now open for the inaugural eBPF Summit, a virtual event, targeted at DevOps, SecOps, platform architects, and developers.
       </p>
 
       <div className="space" />
@@ -834,7 +916,7 @@ const Hero = () => (
 
         <a
           className="button type--join"
-          href="https://cilium.herokuapp.com"
+          href="/slack"
         >
           Join eBPF Summit Slack
         </a>
@@ -846,8 +928,12 @@ const Hero = () => (
 const About = () => (
   <div className="summit-about">
     <div className="wrapper">
-      <h2 className="title">eBPF Summit</h2>
-      <p className="description">eBPF is quickly becoming one of the most talked about technologies in our industry - enabling a new generation of networking, tracing, observability and security infrastructure. The eBPF Summit is targeted at users and potential users of this groundbreaking technology - both those looking at leveraging eBPF directly or via one of the projects leveraging eBPF (e.g. bpftrace, Cilium, Falco, etc.)</p>
+      <h2 className="title">How to join</h2>
+      <p className="description">Streams start  9AM PDT / 4PM GMT / 5PM CET</p>
+      <p className="description">The feedback from Day 1 was that video quality was better on the YouTube Stream vs. the Zoom stream for many attendees (Note that YouTube adds a small lag vs. Zoom).</p>
+      <p className="description"><strong>YouTube Day 2 Stream:</strong> <a href="https://youtu.be/jw8tEPP6jwQ">https://youtu.be/jw8tEPP6jwQ</a><br /><strong>Zoom Day 2 Stream:</strong> <a href="https://us02web.zoom.us/j/87524264130">https://us02web.zoom.us/j/87524264130</a></p>
+      <p className="description">Regardless of which option you choose, you will want to log onto the eBPF Summit Slack channel to participate in Q&A, polls and other fun. Note: If you missed some or all of Day 1, replay is available for 24hrs here:</p>
+      <p className="description"><strong>Day 1 replay:</strong> <a href="https://youtu.be/1GSgyvn4N7E">https://youtu.be/1GSgyvn4N7E</a></p>
     </div>
   </div>
 );
@@ -1004,6 +1090,7 @@ const AgendaItem = ({ description, time, title }) => {
 
 const Agenda = () => (
   <div
+    id="agenda"
     className="summit-agenda"
 
     style={{
@@ -1033,19 +1120,35 @@ const Agenda = () => (
   </div>
 );
 
-const LightningTalksSchedule = () => (
-  <div className="summit-lightning-talks-schedule" id="lightning-talks">
+const LightningTalksSchedule = () => {
+  const [modalVideo, setModalVideo] = useState(null)
+  const closeModalVideo = useCallback(() => setModalVideo(null), [])
+  const showModalVideo = useCallback(video => setModalVideo(video), [])
+
+  return <div
+    className="summit-lightning-talks-schedule"
+    id="lightning-talks"
+  >
     <div className="wrapper">
       <h2 className="title">Lightning Talks</h2>
 
       <div className="table">
-        <div className="captions" aria-hidden>
-          <div className="cell">Title</div>
+        <div
+          className="captions"
+          aria-hidden
+        >
+          <div className="cell"><span>Title <span className="prompt">*click to see video preview</span></span></div>
           <div className="cell">Speaker</div>
         </div>
 
-        {lightningTalks.map(({ title, name, organization }, idx) => <div className="row" key={idx}>
-          <div className="cell"><span className="caption">Title</span>{title}</div>
+        {lightningTalks.map(({ title, name, organization, videoId }, idx) => <div
+          className="row"
+          key={idx}
+        >
+          <div className="cell" onClick={!!videoId ? () => showModalVideo(videoId) : null}>
+            <span className="caption">Title</span>
+            <span className={cn({'link': !!videoId})}>{title}</span>
+          </div>
 
           <div className="cell">
             <span className="caption">Speaker</span>
@@ -1054,11 +1157,13 @@ const LightningTalksSchedule = () => (
         </div>)}
       </div>
     </div>
+
+    <ModalVideo channel='youtube' isOpen={modalVideo !== null} videoId={modalVideo} onClose={closeModalVideo} />
   </div>
-)
+}
 
 const CaruselSlide = ({ showPopup, isPopupShown, name, popupTitle, title, description, hasPopup }) => {
-  return <div className="slide" onClick={showPopup}>
+  return <div className="slide" onClick={hasPopup ? showPopup : null}>
     <h3 className="slide-title">{ name }</h3>
     <h4 className="slide-subtitle">{ title }</h4>
     <h4 className="slide-subtitle">{ popupTitle }</h4>
